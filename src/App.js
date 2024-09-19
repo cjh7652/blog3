@@ -1,12 +1,31 @@
 import './App.css';
-import {useState} from 'react';
+import {useEffect, useState} from 'react';
 import bg from './img/mainBg.jpg';
 import data from './data.js';
 import { Route, Routes, Link, Outlet} from 'react-router-dom';
 import Detail from './routes/Detail';
+import Detail1 from './routes/Detail1';
+/* import About from './routes/About.js'; */
+import axios from 'axios';
 
 function App() {
-	let [datas] =useState(data)
+	let [datas] =useState(data);
+	const [posts, setPosts]= useState([]);
+
+	useEffect(()=>{
+		axios.get('https://jsonplaceholder.typicode.com/users')
+		.then(response => {
+			console.log(response.data)
+			setPosts(response.data)
+		})
+		/* axios({
+			method:'GET',
+			url:'https://jsonplaceholder.typicode.com/users'
+		}).then(response => {
+			console.log(response.data)
+			setPosts(response.data)
+		}) */
+	}, []);
   return (
     <div className="App">
 		{/* <img src="img/animal-7220153_640.jpg" alt="" /> */}
@@ -18,14 +37,14 @@ function App() {
 						<h1 className="logo"><Link to="/">Blog</Link></h1>
 						<ul className="menu">
 							<li><Link to="/">Home</Link></li>
-							<li><Link to="/detail">상세페이지</Link></li>
+							<li><Link to="/detail1">상세페이지</Link></li>
 							<li><Link to="/about">Best</Link></li>
 						</ul>
 					</nav>
 
 					<div className="main-bg" style={{backgroundImage : 'url('+bg+')'}}></div>
 
-					<container className="mt20">
+					<div className="mt20">
 						<h2 className="mb20">Best of Best</h2>
 						<ul className='fb'>
 							
@@ -41,10 +60,20 @@ function App() {
 							}
 							
 						</ul>
-					</container>
+					</div>
+					<br />
+					<ul className='user'>
+						{posts.map(post => (
+							<li key={post.id}>
+								<div>{post.name}</div>
+								<div>{post.email}</div>
+								<div>{post.address.city}</div>
+							</li>
+						))}
+					</ul>
 				</div>} 
 			/>
-			<Route path="/detail" element={<Detail />} />
+			<Route path="/detail1" element={<Detail1 />} />
 			<Route path="/detail/:a" element={<Detail datas={datas} />} />
 			<Route path="/about" element={<About />} >
 				<Route path="menber" element={<div>멤버임</div>}></Route>
