@@ -26,6 +26,7 @@ function App() {
 			setPosts(response.data)
 		}) */
 	}, []);
+	//주석
   return (
     <div className="App">
 		{/* <img src="img/animal-7220153_640.jpg" alt="" /> */}
