@@ -26,6 +26,7 @@ function App() {
 			setPosts(response.data)
 		}) */
 	}, []);
+	//다른사람이 수정하는 바람에 
   return (
     <div className="App">
 		{/* <img src="img/animal-7220153_640.jpg" alt="" /> */}
